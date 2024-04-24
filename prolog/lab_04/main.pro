@@ -1,24 +1,30 @@
 domains
-	list = integer*
+	number, index = integer
 
 predicates
-	mult_by_num(integer, list, list).
-	oddlist(list, list).
-		
-clauses
-	mult_by_num(_, [], []).
-	mult_by_num(N, [H|T], [H1|T1]):-
-		H1 = H * N,
-		mult_by_num(N, T, T1).
-
-	oddlist([], []).
-	oddlist([H|T], [H1|T1]):-
-		0 = H mod 2,
-		H1 = H,
-		oddlist(T, T1).
-	oddlist([_|T], [_|T1]):-
-		oddlist(T, T1).
+	factorial(number, number).
+	factorial(number, number, number).
+	fibonacci(index, number).
+	fibonacci(index, number, number, number).
 	
+clauses
+	factorial(N, Nfact) :- factorial(N, 1, Nfact).
+	factorial(0, CurFact, CurFact) :- !.
+	factorial(1, CurFact, CurFact) :- !.
+	factorial(N, CurFact, R) :-
+		Y=N-1,
+		Nfact = CurFact * N,
+		factorial(Y, Nfact, R).
+
+	fibonacci(N, R) :- fibonacci(N, 0, 1, R).
+	fibonacci(0, R, _, R) :- !.
+	fibonacci(1, _, R, R) :- !.
+	fibonacci(Cnt, Prev1, Prev2, R) :-
+		Cnt1 = Cnt - 1,
+		Prev3 = Prev1 + Prev2,
+		fibonacci(Cnt1, Prev2, Prev3, R).
 goal
-%	mult_by_num(2, [1, 2, 3], X).
-	oddlist([1, 2, 3, 4], X).
+	% factorial(4, F).
+	% factorial(1, F).
+	fibonacci(2, R).
+	% fibonacci(11, R).

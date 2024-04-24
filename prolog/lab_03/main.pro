@@ -1,30 +1,41 @@
-domains
-	number, index = integer
-
 predicates
-	factorial(number, number).
-	factorial(number, number, number).
-	fibonacci(index, number).
-	fibonacci(index, number, number, number).
-	
-clauses
-	factorial(N, Nfact) :- factorial(N, 1, Nfact).
-	factorial(0, CurFact, CurFact) :- !.
-	factorial(1, CurFact, CurFact) :- !.
-	factorial(N, CurFact, R) :-
-		Y=N-1,
-		Nfact = CurFact * N,
-		factorial(Y, Nfact, R).
+	max2(integer, integer, integer).
+	max2_true(integer, integer, integer).
+	max3(integer, integer, integer, integer).
+	max3_true(integer, integer, integer, integer).
 
-	fibonacci(N, R) :- fibonacci(N, 0, 1, R).
-	fibonacci(0, R, _, R) :- !.
-	fibonacci(1, _, R, R) :- !.
-	fibonacci(Cnt, Prev1, Prev2, R) :-
-		Cnt1 = Cnt - 1,
-		Prev3 = Prev1 + Prev2,
-		fibonacci(Cnt1, Prev2, Prev3, R).
+clauses
+	max2(X, Y, R):-
+		X > Y,
+		R = X.
+	max2(X, Y, R):-
+		X <= Y,
+		R = Y.
+	
+	max2_true(X, Y, X):-
+		X > Y,!.
+	max2_true(_, Y, Y).
+	
+	max3(X, Y, Z, R):-
+		X >= Y,
+		X >= Z,
+		R = X.
+	max3(X, Y, Z, R):-
+		Y >= X,
+		Y >= Z,
+		R = Y.
+	max3(X, Y, Z, R):-
+		Z >= Y,
+		Z >= X,
+		R = Z.
+		
+	max3_true(X, Y, Z, X):-
+		X > Y,
+		X > Z,!.
+	max3_true(_, Y, Z, Y):-
+		Y > Z,!.
+	max3_true(_, _, Z, Z).
+	
 goal
-	% factorial(4, F).
-	% factorial(1, F).
-	fibonacci(2, R).
-	% fibonacci(11, R).
+	max3(2, 2, 1, R).
+%	max3_true(1, 3, 2, R).
