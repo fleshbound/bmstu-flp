@@ -18,6 +18,7 @@ clauses
 
 	fibonacci(N, R) :- fibonacci(N, 0, 1, R).
 	fibonacci(0, R, _, R) :- !.
+	fibonacci(1, _, R, R) :- !.
 	fibonacci(Cnt, Prev1, Prev2, R) :-
 		Cnt1 = Cnt - 1,
 		Prev3 = Prev1 + Prev2,
@@ -25,5 +26,5 @@ clauses
 goal
 	% factorial(4, F).
 	% factorial(1, F).
-	% fibonacci(2, R).
+	fibonacci(2, R).
 	% fibonacci(11, R).
