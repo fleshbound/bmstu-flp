@@ -3,8 +3,8 @@ domains
 	list = number*
 
 predicates
-	length(number, list)
-	len(number, number, list)
+	length(integer, list)
+	len(integer, integer, list)
 	sum(number, list)
 	sum_(number, number, list)
 	oddsum(number, list)
@@ -39,15 +39,14 @@ clauses
 
 	filter(_, [], []).
 	filter(N, [H|T], L):-
-		H <= N,
+		H <= N,!,
 		filter(N, T, L).
 	filter(N, [H|T], [H|T1]):-
-		H > N,
 		filter(N, T, T1).
 
 	deleteall(_, [], []).
 	deleteall(N, [N|T], L):-
-		deleteall(N, T, L),!.
+		!,deleteall(N, T, L).
 	deleteall(N, [H|T], [H|T1]):-
 		deleteall(N, T, T1).
 	
@@ -60,10 +59,10 @@ clauses
 	union([H1|T1], L, [H1|T3]):-
 		union(T1, L, T3).
 goal
-%	length(L, []).
-%	sum(S, [1.5, 2.4]).
-	oddsum(S, [1, 2, 3, 4, 5, 6]).
-%	filter(2, [1, 1, 1], L).
+	length(L, [1, 2, 3]).
+%	sum(S, [1.5, 2.4, 1]).
+%	oddsum(S, [1, 2, 3, 4, 5, 6]).
+%	filter(2, [1, 2, 3, 4], L).
 %	deleteall(2, [1, 2, 3, 2, 3], R).
 %	deletefirst(3, [1, 2, 3, 2, 3], R).
 %	union([1, 2, 3], [4, 5, 6], R).
